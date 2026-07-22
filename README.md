@@ -39,3 +39,30 @@ npm run dev
 ```
 
 Runs on http://localhost:5173.
+
+## Deploying to Render
+
+This repo includes a `render.yaml` Blueprint that provisions both services in one
+step: `locker-management-backend` (Web Service) and `locker-management-frontend`
+(Static Site).
+
+1. In the Render dashboard: **New +** → **Blueprint** → connect this GitHub repo.
+   Render reads `render.yaml` and creates both services, but leaves their secret
+   env vars blank (they're marked `sync: false` on purpose — never commit real
+   secrets to the repo).
+2. On **locker-management-backend**, set:
+   - `MONGODB_URI` — your Atlas connection string
+   - `OFFICER_PASSWORD` — the shared officer login password
+   - `JWT_SECRET` — a random string, e.g. output of `openssl rand -hex 32`
+   - `CLIENT_ORIGIN` — leave a placeholder for now (e.g. `http://localhost:5173`);
+     you'll update it in step 4
+3. Deploy the backend and copy its public URL (e.g. `https://locker-management-backend.onrender.com`).
+4. On **locker-management-frontend**, set:
+   - `VITE_API_URL` — `https://locker-management-backend.onrender.com/api`
+   Deploy the frontend and copy its public URL.
+5. Go back to **locker-management-backend**, update `CLIENT_ORIGIN` to the
+   frontend's actual URL, and trigger a redeploy (this is what CORS uses to
+   allow the frontend's requests).
+
+Vite bakes `VITE_API_URL` in at build time, so if you ever change the backend's
+URL, you need to update that var and redeploy the frontend, not just the backend.
