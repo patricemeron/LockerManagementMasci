@@ -275,3 +275,53 @@ tr:last-child td { border-bottom: none; }
   padding-top: 12px;
   border-top: 1px dashed var(--border);
 }
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 10px 12px;
+    gap: 4px;
+  }
+
+  .nav a {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  main {
+    padding: 16px 12px;
+  }
+
+  .card {
+    padding: 18px 16px;
+    border-radius: 12px;
+    gap: 8px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+  }
+
+  .dashboard-header .link-danger {
+    align-self: flex-start;
+  }
+
+  /* 16px prevents iOS Safari from auto-zooming the page on input focus. */
+  input, select {
+    font-size: 16px;
+  }
+
+  .locker-grid {
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+    gap: 4px;
+  }
+
+  th, td {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
